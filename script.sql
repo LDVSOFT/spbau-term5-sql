@@ -15,22 +15,24 @@ CREATE TABLE Cure(
         CHECK (componentId >= 0),
     certificateId INT
         CHECK (certificateId >= 0),
-    UNIQUE(id));
-
+    UNIQUE(id)
+);
 
 CREATE TABLE CureForm(
     id INT
         CHECK (id >= 0),
     name TEXT
         NOT NULL,
-    UNIQUE(id));
+    UNIQUE(id)
+);
 
 CREATE TABLE Manufactorer(
     id INT
         CHECK (id >= 0),
     name TEXT
         NOT NULL,
-    UNIQUE(id));
+    UNIQUE(id)
+);
 
 CREATE TABLE Component(
     id INT
@@ -39,7 +41,8 @@ CREATE TABLE Component(
         NOT NULL,
     formula TEXT
         NOT NULL,
-    UNIQUE(id));
+    UNIQUE(id)
+);
 
 CREATE TABLE Certificates(
     id INT
@@ -48,7 +51,8 @@ CREATE TABLE Certificates(
         NOT NULL,
     labId INT
         CHECK (id >= 0),
-    UNIQUE(id));
+    UNIQUE(id)
+);
 
 CREATE TABLE Lab(
     id INT
@@ -57,5 +61,6 @@ CREATE TABLE Lab(
         NOT NULL,
     boss TEXT
         NOT NULL,
-    UNIQUE(id));
+    UNIQUE(id)
+);
 

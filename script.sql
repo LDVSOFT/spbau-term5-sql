@@ -12,10 +12,11 @@ CREATE TABLE Cure(
     manufactorerId INT
         CHECK (manufactorerId >= 0),
     componentId INT
-        CHECK (manufactorerId >= 0),
+        CHECK (componentId >= 0),
     certificateId INT
-        CHECK (manufactorerId >= 0),
+        CHECK (certificateId >= 0),
     UNIQUE(id));
+
 
 CREATE TABLE CureForm(
     id INT

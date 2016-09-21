@@ -18,7 +18,7 @@ DROP TABLE IF EXISTS DeliveryPart;
 CREATE TABLE DeliveryPart (
 	DeliveryId INT,
 	CureId INT,
-	SellFormId INT,
+	SellFormId INT
 		NOT NULL,
 		-- Foreign Key to SellForm
 	DeliveryPackageCount INT

@@ -1,5 +1,6 @@
 -- all about cures
 
+DROP TABLE IF EXISTS Cure;
 CREATE TABLE Cure(
     id INT
         PRIMARY KEY,
@@ -17,6 +18,7 @@ CREATE TABLE Cure(
         NOT NULL
 );
 
+DROP TABLE IF EXISTS CureForm;
 CREATE TABLE CureForm(
     id INT
         PRIMARY KEY,
@@ -24,6 +26,7 @@ CREATE TABLE CureForm(
         NOT NULL
 );
 
+DROP TABLE IF EXISTS Manufactorer;
 CREATE TABLE Manufactorer(
     id INT
         PRIMARY KEY,
@@ -31,6 +34,7 @@ CREATE TABLE Manufactorer(
         NOT NULL
 );
 
+DROP TABLE IF EXISTS Component;
 CREATE TABLE Component(
     id INT
         PRIMARY KEY,
@@ -40,6 +44,7 @@ CREATE TABLE Component(
         NOT NULL
 );
 
+DROP TABLE IF EXISTS Certificates;
 CREATE TABLE Certificates(
     id INT
         PRIMARY KEY,
@@ -49,6 +54,7 @@ CREATE TABLE Certificates(
         NOT NULL
 );
 
+DROP TABLE IF EXISTS Lab;
 CREATE TABLE Lab(
     id INT
         PRIMARY KEY,

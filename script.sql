@@ -85,7 +85,7 @@ CREATE TABLE Distributor (
         PRIMARY KEY,
     address TEXT
         NOT NULL,
-    bankAccountId INT
+    bankAccountNumber TEXT
         NOT NULL,
     contactName TEXT
         NOT NULL,

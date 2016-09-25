@@ -69,7 +69,7 @@ CREATE TABLE Cure(
 );
 
 -- all about delivery
-DROP TABLE IF EXISTS Warehouse;
+DROP TABLE IF EXISTS Warehouse CASCADE;
 CREATE TABLE Warehouse (
 	Id INT
 		PRIMARY KEY,
@@ -78,7 +78,7 @@ CREATE TABLE Warehouse (
 );
 
 
-DROP TABLE IF EXISTS Delivery;
+DROP TABLE IF EXISTS Delivery CASCADE;
 CREATE TABLE Delivery (
 	Id INT
 		PRIMARY KEY,
@@ -87,12 +87,12 @@ CREATE TABLE Delivery (
 		REFERENCES Warehouse,
 	DistributerId INT
 		NOT NULL
-		REFERENCES Distributer,
+--		REFERENCES Distributer,
 	DeliveryDate TIMESTAMP,
 	WarehouseKeeper TEXT
 );
 
-DROP TABLE IF EXISTS DeliveryPart;
+DROP TABLE IF EXISTS DeliveryPart CASCADE;
 CREATE TABLE DeliveryPart (
 	DeliveryId INT,
 	CureId INT,
@@ -107,7 +107,7 @@ CREATE TABLE DeliveryPart (
 
 -- sale
 
-DROP TABLE IF EXISTS Drugstore;
+DROP TABLE IF EXISTS Drugstore CASCADE;
 CREATE TABLE Drugstore(
     id INT
 		PRIMARY KEY,
@@ -117,7 +117,7 @@ CREATE TABLE Drugstore(
         CHECK (num > 0)
 );
 
-DROP TABLE IF EXISTS DrugsInDrugstore;
+DROP TABLE IF EXISTS DrugsInDrugstore CASCADE;
 CREATE TABLE DrugsInDrugstore (
     drugstoreId INT
 		REFERENCES Drugstore,
@@ -131,7 +131,7 @@ CREATE TABLE DrugsInDrugstore (
 	PRIMARY KEY(drugstoreId, cureId)
 );
 
-DROP TABLE IF EXISTS Auto;
+DROP TABLE IF EXISTS Auto CASCADE;
 CREATE TABLE Auto (
     id INT
 		PRIMARY KEY,
@@ -142,7 +142,7 @@ CREATE TABLE Auto (
 );
 
 
-DROP TABLE IF EXISTS AutoTask;
+DROP TABLE IF EXISTS AutoTask CASCADE;
 CREATE TABLE AutoTask (
     id              INT
         PRIMARY KEY,

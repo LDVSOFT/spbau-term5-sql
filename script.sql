@@ -175,7 +175,7 @@ CREATE TABLE DeliveryTask (
     drugstoreId INT
         NOT NULL
         REFERENCES Drugstore,
-    packagesAmount INT
+    itemsAmount INT
         NOT NULL
         CHECK (packagesAmount >= 0),
     WarehouseId INT

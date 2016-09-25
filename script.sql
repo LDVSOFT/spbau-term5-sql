@@ -35,17 +35,6 @@ CREATE TABLE Laboratory(
         NOT NULL
 );
 
-DROP TABLE IF EXISTS Certificate CASCADE;
-CREATE TABLE Certificate(
-    id INT
-        PRIMARY KEY,
-    expires DATE
-        NOT NULL,
-    laboratoryId INT
-        NOT NULL
-        REFERENCES Laboratory
-);
-
 DROP TABLE IF EXISTS Drug CASCADE;
 CREATE TABLE Drug(
     id INT
@@ -63,9 +52,11 @@ CREATE TABLE Drug(
     componentId INT
         NOT NULL
         REFERENCES Component,
-    certificateId INT
+    certificateExpires DATE
+        NOT NULL,
+    certificateLaboratoryId INT
         NOT NULL
-        REFERENCES Certificate
+        REFERENCES Laboratory
 );
 
 -- all about delivery

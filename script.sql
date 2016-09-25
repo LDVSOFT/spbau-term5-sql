@@ -77,6 +77,29 @@ CREATE TABLE Warehouse (
 		NOT NULL
 );
 
+DROP TABLE IF EXISTS DistributorContact CASCADE;
+CREATE TABLE DistributorContact (
+    Id INT
+        PRIMARY KEY,
+    Name TEXT
+        NOT NULL,
+    PhoneNumber TEXT
+        NOT NULL
+);
+
+DROP TABLE IF EXISTS Distributori CASCADE;
+CREATE TABLE Distributor (
+    Id INT
+        PRIMARY KEY,
+    Addess
+        TEXT
+        NOT NULL,
+    BankAccountId INT
+        NOT NULL,
+    ContactId INT
+        NOT NULL
+        REFERENCES DistributorContact
+);
 
 DROP TABLE IF EXISTS Delivery CASCADE;
 CREATE TABLE Delivery (
@@ -87,7 +110,7 @@ CREATE TABLE Delivery (
 		REFERENCES Warehouse,
 	DistributerId INT
 		NOT NULL
---		REFERENCES Distributer,
+		REFERENCES Distributor,
 	DeliveryDate TIMESTAMP,
 	WarehouseKeeper TEXT
 );
@@ -110,8 +133,8 @@ CREATE TABLE DeliveryPart (
 DROP TABLE IF EXISTS Drugstore CASCADE;
 CREATE TABLE Drugstore(
     id INT
-        PRIMARY KEY,
-    adress TEXT
+		PRIMARY KEY,
+    address TEXT
         NOT NULL,
     num INT
         CHECK (num > 0)

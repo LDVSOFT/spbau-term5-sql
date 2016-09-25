@@ -87,7 +87,7 @@ CREATE TABLE DistributorContact (
         NOT NULL
 );
 
-DROP TABLE IF EXISTS Distributori CASCADE;
+DROP TABLE IF EXISTS Distributor CASCADE;
 CREATE TABLE Distributor (
     Id INT
         PRIMARY KEY,

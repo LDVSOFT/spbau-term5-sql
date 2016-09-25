@@ -71,54 +71,53 @@ CREATE TABLE Drug(
 -- all about delivery
 DROP TABLE IF EXISTS Warehouse CASCADE;
 CREATE TABLE Warehouse (
-    Id INT
+    id INT
         PRIMARY KEY,
-    Address TEXT
+    address TEXT
         NOT NULL
 );
 
 DROP TABLE IF EXISTS Distributor CASCADE;
 CREATE TABLE Distributor (
-    Id INT
+    id INT
         PRIMARY KEY,
-    Address
-        TEXT
+    address TEXT
         NOT NULL,
-    BankAccountId INT
+    bankAccountId INT
         NOT NULL,
-    ContactName TEXT
+    contactName TEXT
         NOT NULL,
-    ContactPhoneNumber TEXT
+    contactPhoneNumber TEXT
         NOT NULL
 );
 
 DROP TABLE IF EXISTS Delivery CASCADE;
 CREATE TABLE Delivery (
-    Id INT
+    id INT
         PRIMARY KEY,
-    WarehouseId INT
+    warehouseId INT
         NOT NULL
         REFERENCES Warehouse,
-    DistributerId INT
+    distributerId INT
         NOT NULL
         REFERENCES Distributor,
-    DeliveryDate TIMESTAMP,
-    WarehouseKeeper TEXT
+    deliveryDate TIMESTAMP,
+    warehouseKeeper TEXT
 );
 
 DROP TABLE IF EXISTS DeliveryPart CASCADE;
 CREATE TABLE DeliveryPart (
-    DeliveryId INT
+    deliveryId INT
         REFERENCES Delivery,
-    DrugId INT
+    drugId INT
         REFERENCES Drug,
-    DeliveryPackageCount INT
+    deliveryPackageCount INT
         NOT NULL,
-    DeliveryPackageWeight REAL
+    deliveryPackageWeight REAL
         NOT NULL,
-    ItemsPerPackage INT
+    itemsPerPackage INT
         NOT NULL,
-    ItemPurchasePrice NUMERIC(9, 2)
+    itemPurchasePrice NUMERIC(9, 2)
         NOT NULL,
     PRIMARY KEY(DeliveryId, DrugId)
 );
@@ -178,7 +177,7 @@ CREATE TABLE DeliveryTask (
     itemsAmount INT
         NOT NULL
         CHECK (packagesAmount >= 0),
-    WarehouseId INT
+    warehouseId INT
         NOT NULL
         REFERENCES Warehouse
 );

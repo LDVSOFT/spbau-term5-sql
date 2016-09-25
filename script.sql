@@ -1,5 +1,31 @@
 -- all about cures
-DROP TABLE IF EXISTS Lab;
+DROP TABLE IF EXISTS CureForm CASCADE;
+CREATE TABLE CureForm(
+    id INT
+        PRIMARY KEY,
+    name TEXT
+        NOT NULL
+);
+
+DROP TABLE IF EXISTS Manufactorer CASCADE;
+CREATE TABLE Manufactorer(
+    id INT
+        PRIMARY KEY,
+    name TEXT
+        NOT NULL
+);
+
+DROP TABLE IF EXISTS Component CASCADE;
+CREATE TABLE Component(
+    id INT
+        PRIMARY KEY,
+    name TEXT
+        NOT NULL,
+    formula TEXT
+        NOT NULL
+);
+
+DROP TABLE IF EXISTS Lab CASCADE;
 CREATE TABLE Lab(
     id INT
         PRIMARY KEY,
@@ -9,7 +35,7 @@ CREATE TABLE Lab(
         NOT NULL
 );
 
-DROP TABLE IF EXISTS Certificate;
+DROP TABLE IF EXISTS Certificate CASCADE;
 CREATE TABLE Certificate(
     id INT
         PRIMARY KEY,
@@ -20,33 +46,7 @@ CREATE TABLE Certificate(
 		REFERENCES Lab
 );
 
-DROP TABLE IF EXISTS Component;
-CREATE TABLE Component(
-    id INT
-        PRIMARY KEY,
-    name TEXT
-        NOT NULL,
-    formula TEXT
-        NOT NULL
-);
-
-DROP TABLE IF EXISTS CureForm;
-CREATE TABLE CureForm(
-    id INT
-        PRIMARY KEY,
-    name TEXT
-        NOT NULL
-);
-
-DROP TABLE IF EXISTS Manufactorer;
-CREATE TABLE Manufactorer(
-    id INT
-        PRIMARY KEY,
-    name TEXT
-        NOT NULL
-);
-
-DROP TABLE IF EXISTS Cure;
+DROP TABLE IF EXISTS Cure CASCADE;
 CREATE TABLE Cure(
     id INT
         PRIMARY KEY,

@@ -1,40 +1,21 @@
--- all about cures
-
-DROP TABLE IF EXISTS Cure;
-CREATE TABLE Cure(
-    id INT
-        PRIMARY KEY,
-    name TEXT
-        NOT NULL,
-    internationalName TEXT
-        NOT NULL,
-    cureFormId INT
-        NOT NULL,
-    manufactorerId INT
-        NOT NULL,
-    componentId INT
-        NOT NULL,
-    certificateId INT
-        NOT NULL
-);
-
-DROP TABLE IF EXISTS CureForm;
-CREATE TABLE CureForm(
+-- all about drugs
+DROP TABLE IF EXISTS DosageForm CASCADE;
+CREATE TABLE DosageForm(
     id INT
         PRIMARY KEY,
     name TEXT
         NOT NULL
 );
 
-DROP TABLE IF EXISTS Manufactorer;
-CREATE TABLE Manufactorer(
+DROP TABLE IF EXISTS Manufacturer CASCADE;
+CREATE TABLE Manufacturer(
     id INT
         PRIMARY KEY,
     name TEXT
         NOT NULL
 );
 
-DROP TABLE IF EXISTS Component;
+DROP TABLE IF EXISTS Component CASCADE;
 CREATE TABLE Component(
     id INT
         PRIMARY KEY,
@@ -44,121 +25,157 @@ CREATE TABLE Component(
         NOT NULL
 );
 
-DROP TABLE IF EXISTS Certificates;
-CREATE TABLE Certificates(
+DROP TABLE IF EXISTS Laboratory CASCADE;
+CREATE TABLE Laboratory(
     id INT
         PRIMARY KEY,
-    expires DATE
+    name TEXT
         NOT NULL,
-    labId INT
+    managerLastName TEXT
         NOT NULL
 );
 
-DROP TABLE IF EXISTS Lab;
-CREATE TABLE Lab(
+DROP TABLE IF EXISTS Drug CASCADE;
+CREATE TABLE Drug(
     id INT
         PRIMARY KEY,
-    labName TEXT
+    name TEXT
         NOT NULL,
-    boss TEXT
+    internationalName TEXT
+        NOT NULL,
+    dosageFormId INT
         NOT NULL
+        REFERENCES DosageForm,
+    manufacturerId INT
+        NOT NULL
+        REFERENCES Manufacturer,
+    componentId INT
+        NOT NULL
+        REFERENCES Component,
+    certificateExpires DATE
+        NOT NULL,
+    certificateLaboratoryId INT
+        NOT NULL
+        REFERENCES Laboratory
+);
 
 -- all about delivery
-
-DROP TABLE IF EXISTS Delivery;
-CREATE TABLE Delivery (
-	Id INT
-		PRIMARY KEY,
-	WarehouseId INT
-		NOT NULL,
-		-- Foreign key to Warehouse
-	DistributerId INT
-		NOT NULL,
-		-- Foreign key to Distributer
-	DeliveryDate TIMESTAMP,
-	WarehouseKeeper TEXT
-);
-
-DROP TABLE IF EXISTS DeliveryPart;
-CREATE TABLE DeliveryPart (
-	DeliveryId INT,
-	CureId INT,
-	SellFormId INT
-		NOT NULL,
-		-- Foreign Key to SellForm
-	DeliveryPackageCount INT
-		NOT NULL,
-	DeliveryPackageWeight REAL
-		NOT NULL,
-	ItemsPerPackage INT
-		NOT NULL,
-	PRIMARY KEY(DeliveryId, CureId)
-);
-
-DROP TABLE IF EXISTS Warehouse;
+DROP TABLE IF EXISTS Warehouse CASCADE;
 CREATE TABLE Warehouse (
-	Id INT
-		PRIMARY KEY,
-	Adress TEXT
-		NOT NULL
+    id INT
+        PRIMARY KEY,
+    address TEXT
+        NOT NULL,
+    number INT
+        NOT NULL
+);
+
+DROP TABLE IF EXISTS Distributor CASCADE;
+CREATE TABLE Distributor (
+    id INT
+        PRIMARY KEY,
+    address TEXT
+        NOT NULL,
+    bankAccountNumber TEXT
+        NOT NULL,
+    contactName TEXT
+        NOT NULL,
+    contactPhoneNumber TEXT
+        NOT NULL
+);
+
+DROP TABLE IF EXISTS Delivery CASCADE;
+CREATE TABLE Delivery (
+    id INT
+        PRIMARY KEY,
+    warehouseId INT
+        NOT NULL
+        REFERENCES Warehouse,
+    distributerId INT
+        NOT NULL
+        REFERENCES Distributor,
+    deliveredAt TIMESTAMP
+        NOT NULL,
+    warehouseKeeper TEXT
+        NOT NULL
+);
+
+DROP TABLE IF EXISTS DeliveryPart CASCADE;
+CREATE TABLE DeliveryPart (
+    deliveryId INT
+        REFERENCES Delivery,
+    drugId INT
+        REFERENCES Drug,
+    packageCount INT
+        NOT NULL
+        CHECK (packageCount >= 0),
+    packageWeight REAL
+        NOT NULL,
+    itemsPerPackage INT
+        NOT NULL
+        CHECK (itemsPerPackage >= 0),
+    itemPurchasePrice NUMERIC(9, 2)
+        NOT NULL,
+    PRIMARY KEY(DeliveryId, DrugId)
 );
 
 -- sale
 
+DROP TABLE IF EXISTS Drugstore CASCADE;
 CREATE TABLE Drugstore(
-    id     INT
-        CHECK (id >= 0),
-    adress TEXT
+    id INT
+        PRIMARY KEY,
+    address TEXT
         NOT NULL,
-    num    INT
-        CHECK (num > 0),
-    UNIQUE(id)
+    number INT
+        NOT NULL
 );
 
-CREATE TABLE DrugsInDrugstore(
-    id              INT
-        CHECK (id >= 0),
-    drugstoreId     INT
-        CHECK (drugstoreId >= 0),
-    cureId          INT
-        CHECK (cureId >= 0),
-    price           INT
+DROP TABLE IF EXISTS DrugsInDrugstore CASCADE;
+CREATE TABLE DrugsInDrugstore (
+    drugstoreId INT
+        REFERENCES Drugstore,
+    drugId INT
+        REFERENCES Drug,
+    price NUMERIC(9, 2)
+        NOT NULL
         CHECK (price >= 0),
-    packagesAmount  INT
+    packagesAmount INT
+        NOT NULL
         CHECK (packagesAmount >= 0), 
-    UNIQUE(id)
+    PRIMARY KEY(drugstoreId, drugId)
 );
 
-CREATE TABLE Auto(
-    id             INT
-        CHECK (id >= 0), 
-    num            INT
-        CHECK (num >= 0), 
-    inspectionDate DATE,
-    UNIQUE(id)
-);
-
-CREATE TABLE AutoTask(
-    id              INT
-        CHECK (id >= 0),
-    autoId          INT
-        CHECK (id >= 0),
-    taskDate        Date,
-    cureId          INT
-        CHECK (cureId >= 0),
-    dragstoreId     INT
-        CHECK (dragstoreId >= 0),
-    packagesAmount  INT
-        CHECK (packagesAmount >= 0),
-    storageId       INT
-        CHECK (storageID >= 0),
-    UNIQUE(id)
-);
-
-CREATE TABLE Storage(
-    id      INT
-        CHECK (id >= 0),
-    adress  TEXT
+DROP TABLE IF EXISTS Car CASCADE;
+CREATE TABLE Car (
+    id INT
+        PRIMARY KEY,
+    licensePlate TEXT
         NOT NULL,
-    UNIQUE(id)
+    inspectionDate DATE
+        NOT NULL
+);
+
+
+DROP TABLE IF EXISTS DeliveryTask CASCADE;
+CREATE TABLE DeliveryTask (
+    id INT
+        PRIMARY KEY,
+    carId INT
+        NOT NULL
+        REFERENCES Car,
+    taskDate DATE
+        NOT NULL,
+    drugId INT
+        NOT NULL
+        REFERENCES Drug,
+    drugstoreId INT
+        NOT NULL
+        REFERENCES Drugstore,
+    itemsCount INT
+        NOT NULL
+        CHECK (itemsCount >= 0),
+    warehouseId INT
+        NOT NULL
+        REFERENCES Warehouse
 );

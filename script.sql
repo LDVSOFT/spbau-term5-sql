@@ -167,21 +167,21 @@ CREATE TABLE Auto (
 
 DROP TABLE IF EXISTS AutoTask CASCADE;
 CREATE TABLE AutoTask (
-    id              INT
+    id INT
         PRIMARY KEY,
-    autoId          INT
+    autoId INT
         NOT NULL
-                REFERENCES Auto,
-    taskDate        Date,
-    cureId          INT
+        REFERENCES Auto,
+    taskDate DATE,
+    cureId INT
         NOT NULL
-                REFERENCES Cure,
-    dragstoreId     INT
+        REFERENCES Cure,
+    dragstoreId INT
         NOT NULL
-                REFERENCES Drugstore,
-    packagesAmount  INT
+        REFERENCES Drugstore,
+    packagesAmount INT
         CHECK (packagesAmount >= 0),
-    WarehouseId       INT
+    WarehouseId INT
         NOT NULL
-                REFERENCES Warehouse
+        REFERENCES Warehouse
 );

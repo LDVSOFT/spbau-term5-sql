@@ -103,8 +103,10 @@ CREATE TABLE Delivery (
     distributerId INT
         NOT NULL
         REFERENCES Distributor,
-    deliveredAt TIMESTAMP,
+    deliveredAt TIMESTAMP
+        NOT NULL,
     warehouseKeeper TEXT
+        NOT NULL
 );
 
 DROP TABLE IF EXISTS DeliveryPart CASCADE;
@@ -133,6 +135,7 @@ CREATE TABLE Drugstore(
     address TEXT
         NOT NULL,
     number INT
+        NOT NULL
 );
 
 DROP TABLE IF EXISTS DrugsInDrugstore CASCADE;
@@ -145,6 +148,7 @@ CREATE TABLE DrugsInDrugstore (
         NOT NULL
         CHECK (price >= 0),
     packagesAmount INT
+        NOT NULL
         CHECK (packagesAmount >= 0), 
     PRIMARY KEY(drugstoreId, drugId)
 );

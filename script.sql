@@ -67,6 +67,7 @@ CREATE TABLE Lab(
         NOT NULL,
     boss TEXT
         NOT NULL
+);
 
 -- all about delivery
 
@@ -107,18 +108,18 @@ CREATE TABLE Warehouse (
 
 -- sale
 
+DROP TABLE IF EXISTS Drugstore;
 CREATE TABLE Drugstore(
     id INT
-        CHECK (id >= 0)
 		PRIMARY KEY,
     adress TEXT
         NOT NULL,
     num INT
-        CHECK (num > 0),
-    PRIMARY KEY(id)
+        CHECK (num > 0)
 );
 
-CREATE TABLE DrugsInDrugstore(
+DROP TABLE IF EXISTS DrugsInDrugstore;
+CREATE TABLE DrugsInDrugstore (
     drugstoreId INT
 		REFERENCES Drugstore,
     cureId INT
@@ -131,7 +132,8 @@ CREATE TABLE DrugsInDrugstore(
 	PRIMARY KEY(drugstoreId, cureId)
 );
 
-CREATE TABLE Auto(
+DROP TABLE IF EXISTS Auto;
+CREATE TABLE Auto (
     id INT
 		PRIMARY KEY,
     num TEXT
@@ -140,19 +142,24 @@ CREATE TABLE Auto(
 		NOT NULL
 );
 
-CREATE TABLE AutoTask(
+
+DROP TABLE IF EXISTS AutoTask;
+CREATE TABLE AutoTask (
     id              INT
-        CHECK (id >= 0),
+        PRIMARY KEY,
     autoId          INT
-        CHECK (id >= 0),
+        NOT NULL
+                REFERENCES Auto,
     taskDate        Date,
     cureId          INT
-        CHECK (cureId >= 0),
+        NOT NULL
+                REFERENCES Cure,
     dragstoreId     INT
-        CHECK (dragstoreId >= 0),
+        NOT NULL
+                REFERENCES Drugstore,
     packagesAmount  INT
         CHECK (packagesAmount >= 0),
-    storageId       INT
-        CHECK (storageID >= 0),
-    UNIQUE(id)
+    WarehouseId       INT
+        NOT NULL
+                REFERENCES Warehouse
 );

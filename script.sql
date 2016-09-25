@@ -77,16 +77,6 @@ CREATE TABLE Warehouse (
         NOT NULL
 );
 
-DROP TABLE IF EXISTS DistributorContact CASCADE;
-CREATE TABLE DistributorContact (
-    Id INT
-        PRIMARY KEY,
-    Name TEXT
-        NOT NULL,
-    PhoneNumber TEXT
-        NOT NULL
-);
-
 DROP TABLE IF EXISTS Distributor CASCADE;
 CREATE TABLE Distributor (
     Id INT
@@ -96,9 +86,10 @@ CREATE TABLE Distributor (
         NOT NULL,
     BankAccountId INT
         NOT NULL,
-    ContactId INT
+    ContactName TEXT
+        NOT NULL,
+    ContactPhoneNumber TEXT
         NOT NULL
-        REFERENCES DistributorContact
 );
 
 DROP TABLE IF EXISTS Delivery CASCADE;

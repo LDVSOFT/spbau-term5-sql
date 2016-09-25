@@ -116,11 +116,13 @@ CREATE TABLE DeliveryPart (
     drugId INT
         REFERENCES Drug,
     packageCount INT
-        NOT NULL,
+        NOT NULL
+        CHECK (packageCount >= 0),
     packageWeight REAL
         NOT NULL,
     itemsPerPackage INT
-        NOT NULL,
+        NOT NULL
+        CHECK (itemsPerPackage >= 0),
     itemPurchasePrice NUMERIC(9, 2)
         NOT NULL,
     PRIMARY KEY(DeliveryId, DrugId)
@@ -179,9 +181,9 @@ CREATE TABLE DeliveryTask (
     drugstoreId INT
         NOT NULL
         REFERENCES Drugstore,
-    itemsAmount INT
+    itemsCount INT
         NOT NULL
-        CHECK (itemsAmount >= 0),
+        CHECK (itemsCount >= 0),
     warehouseId INT
         NOT NULL
         REFERENCES Warehouse

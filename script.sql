@@ -1,6 +1,6 @@
 -- all about drugs
-DROP TABLE IF EXISTS DrugForm CASCADE;
-CREATE TABLE DrugForm(
+DROP TABLE IF EXISTS DosageForm CASCADE;
+CREATE TABLE DosageForm(
     id INT
         PRIMARY KEY,
     name TEXT
@@ -54,9 +54,9 @@ CREATE TABLE Drug(
         NOT NULL,
     internationalName TEXT
         NOT NULL,
-    drugFormId INT
+    dosageFormId INT
         NOT NULL
-		REFERENCES DrugForm,
+		REFERENCES DosageForm,
     manufacturerId INT
         NOT NULL
 		REFERENCES Manufacturer,

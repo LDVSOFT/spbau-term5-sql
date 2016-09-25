@@ -127,6 +127,8 @@ CREATE TABLE DeliveryPart (
         NOT NULL,
     ItemsPerPackage INT
         NOT NULL,
+    ItemPurchasePrice NUMERIC(9, 2)
+        NOT NULL,
     PRIMARY KEY(DeliveryId, DrugId)
 );
 

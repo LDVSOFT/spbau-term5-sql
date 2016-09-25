@@ -111,9 +111,9 @@ CREATE TABLE DeliveryPart (
         REFERENCES Delivery,
     drugId INT
         REFERENCES Drug,
-    deliveryPackageCount INT
+    packageCount INT
         NOT NULL,
-    deliveryPackageWeight REAL
+    packageWeight REAL
         NOT NULL,
     itemsPerPackage INT
         NOT NULL,

@@ -9,13 +9,17 @@ CREATE TABLE Cure(
     internationalName TEXT
         NOT NULL,
     cureFormId INT
-        NOT NULL,
+        NOT NULL
+		REFERENCES CureForm,
     manufactorerId INT
-        NOT NULL,
+        NOT NULL
+		REFERENCES Manufactorer,
     componentId INT
-        NOT NULL,
+        NOT NULL
+		REFERENCES Component,
     certificateId INT
         NOT NULL
+		REFERENCES Certificate
 );
 
 DROP TABLE IF EXISTS CureForm;
@@ -44,14 +48,15 @@ CREATE TABLE Component(
         NOT NULL
 );
 
-DROP TABLE IF EXISTS Certificates;
-CREATE TABLE Certificates(
+DROP TABLE IF EXISTS Certificate;
+CREATE TABLE Certificate(
     id INT
         PRIMARY KEY,
     expires DATE
         NOT NULL,
     labId INT
         NOT NULL
+		REFERENCES Lab
 );
 
 DROP TABLE IF EXISTS Lab;
@@ -70,11 +75,11 @@ CREATE TABLE Delivery (
 	Id INT
 		PRIMARY KEY,
 	WarehouseId INT
-		NOT NULL,
-		-- Foreign key to Warehouse
+		NOT NULL
+		REFERENCES Warehouse,
 	DistributerId INT
-		NOT NULL,
-		-- Foreign key to Distributer
+		NOT NULL
+		REFERENCES Distributer,
 	DeliveryDate TIMESTAMP,
 	WarehouseKeeper TEXT
 );
@@ -83,9 +88,6 @@ DROP TABLE IF EXISTS DeliveryPart;
 CREATE TABLE DeliveryPart (
 	DeliveryId INT,
 	CureId INT,
-	SellFormId INT
-		NOT NULL,
-		-- Foreign Key to SellForm
 	DeliveryPackageCount INT
 		NOT NULL,
 	DeliveryPackageWeight REAL
@@ -106,36 +108,36 @@ CREATE TABLE Warehouse (
 -- sale
 
 CREATE TABLE Drugstore(
-    id     INT
-        CHECK (id >= 0),
+    id INT
+        CHECK (id >= 0)
+		PRIMARY KEY,
     adress TEXT
         NOT NULL,
-    num    INT
+    num INT
         CHECK (num > 0),
-    UNIQUE(id)
+    PRIMARY KEY(id)
 );
 
 CREATE TABLE DrugsInDrugstore(
-    id              INT
-        CHECK (id >= 0),
-    drugstoreId     INT
-        CHECK (drugstoreId >= 0),
-    cureId          INT
-        CHECK (cureId >= 0),
-    price           INT
+    drugstoreId INT
+		REFERENCES Drugstore,
+    cureId INT
+		REFERENCES Cure,
+    price INT
+		NOT NULL
         CHECK (price >= 0),
-    packagesAmount  INT
+    packagesAmount INT
         CHECK (packagesAmount >= 0), 
-    UNIQUE(id)
+	PRIMARY KEY(drugstoreId, cureId)
 );
 
 CREATE TABLE Auto(
-    id             INT
-        CHECK (id >= 0), 
-    num            INT
-        CHECK (num >= 0), 
-    inspectionDate DATE,
-    UNIQUE(id)
+    id INT
+		PRIMARY KEY,
+    num TEXT
+        NOT NULL,
+    inspectionDate DATE
+		NOT NULL
 );
 
 CREATE TABLE AutoTask(
@@ -152,13 +154,5 @@ CREATE TABLE AutoTask(
         CHECK (packagesAmount >= 0),
     storageId       INT
         CHECK (storageID >= 0),
-    UNIQUE(id)
-);
-
-CREATE TABLE Storage(
-    id      INT
-        CHECK (id >= 0),
-    adress  TEXT
-        NOT NULL,
     UNIQUE(id)
 );

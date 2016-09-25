@@ -101,7 +101,7 @@ CREATE TABLE Delivery (
     distributerId INT
         NOT NULL
         REFERENCES Distributor,
-    deliveryDate TIMESTAMP,
+    deliveredAt TIMESTAMP,
     warehouseKeeper TEXT
 );
 

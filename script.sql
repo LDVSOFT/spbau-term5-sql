@@ -154,24 +154,24 @@ CREATE TABLE DrugsInDrugstore (
     PRIMARY KEY(drugstoreId, drugId)
 );
 
-DROP TABLE IF EXISTS Auto CASCADE;
-CREATE TABLE Auto (
+DROP TABLE IF EXISTS Car CASCADE;
+CREATE TABLE Car (
     id INT
         PRIMARY KEY,
-    num TEXT
+    licensePlate TEXT
         NOT NULL,
     inspectionDate DATE
         NOT NULL
 );
 
 
-DROP TABLE IF EXISTS AutoTask CASCADE;
-CREATE TABLE AutoTask (
+DROP TABLE IF EXISTS DeliveryTask CASCADE;
+CREATE TABLE DeliveryTask (
     id INT
         PRIMARY KEY,
-    autoId INT
+    carId INT
         NOT NULL
-        REFERENCES Auto,
+        REFERENCES Car,
     taskDate DATE,
     drugId INT
         NOT NULL

@@ -43,7 +43,7 @@ CREATE TABLE Certificate(
         NOT NULL,
     laboratoryId INT
         NOT NULL
-		REFERENCES Laboratory
+        REFERENCES Laboratory
 );
 
 DROP TABLE IF EXISTS Drug CASCADE;
@@ -56,25 +56,25 @@ CREATE TABLE Drug(
         NOT NULL,
     dosageFormId INT
         NOT NULL
-		REFERENCES DosageForm,
+        REFERENCES DosageForm,
     manufacturerId INT
         NOT NULL
-		REFERENCES Manufacturer,
+        REFERENCES Manufacturer,
     componentId INT
         NOT NULL
-		REFERENCES Component,
+        REFERENCES Component,
     certificateId INT
         NOT NULL
-		REFERENCES Certificate
+        REFERENCES Certificate
 );
 
 -- all about delivery
 DROP TABLE IF EXISTS Warehouse CASCADE;
 CREATE TABLE Warehouse (
-	Id INT
-		PRIMARY KEY,
-	Address TEXT
-		NOT NULL
+    Id INT
+        PRIMARY KEY,
+    Address TEXT
+        NOT NULL
 );
 
 DROP TABLE IF EXISTS DistributorContact CASCADE;
@@ -103,29 +103,31 @@ CREATE TABLE Distributor (
 
 DROP TABLE IF EXISTS Delivery CASCADE;
 CREATE TABLE Delivery (
-	Id INT
-		PRIMARY KEY,
-	WarehouseId INT
-		NOT NULL
-		REFERENCES Warehouse,
-	DistributorId INT
-		NOT NULL
-		REFERENCES Distributor,
-	DeliveryDate TIMESTAMP,
-	WarehouseKeeper TEXT
+    Id INT
+        PRIMARY KEY,
+    WarehouseId INT
+        NOT NULL
+        REFERENCES Warehouse,
+    DistributerId INT
+        NOT NULL
+        REFERENCES Distributor,
+    DeliveryDate TIMESTAMP,
+    WarehouseKeeper TEXT
 );
 
 DROP TABLE IF EXISTS DeliveryPart CASCADE;
 CREATE TABLE DeliveryPart (
-	DeliveryId INT,
-	DrugId INT,
-	DeliveryPackageCount INT
-		NOT NULL,
-	DeliveryPackageWeight REAL
-		NOT NULL,
-	ItemsPerPackage INT
-		NOT NULL,
-	PRIMARY KEY(DeliveryId, DrugId)
+    DeliveryId INT
+        REFERENCES Delivery,
+    DrugId INT
+        REFERENCES Drug,
+    DeliveryPackageCount INT
+        NOT NULL,
+    DeliveryPackageWeight REAL
+        NOT NULL,
+    ItemsPerPackage INT
+        NOT NULL,
+    PRIMARY KEY(DeliveryId, DrugId)
 );
 
 -- sale
@@ -133,7 +135,7 @@ CREATE TABLE DeliveryPart (
 DROP TABLE IF EXISTS Drugstore CASCADE;
 CREATE TABLE Drugstore(
     id INT
-		PRIMARY KEY,
+        PRIMARY KEY,
     address TEXT
         NOT NULL,
     num INT
@@ -146,8 +148,8 @@ CREATE TABLE DrugsInDrugstore (
         REFERENCES Drugstore,
     drugId INT
         REFERENCES Drug,
-    price INT
-	    NOT NULL
+    price NUMERIC(9, 2)
+        NOT NULL
         CHECK (price >= 0),
     packagesAmount INT
         CHECK (packagesAmount >= 0), 
@@ -173,6 +175,7 @@ CREATE TABLE DeliveryTask (
         NOT NULL
         REFERENCES Car,
     taskDate DATE,
+        NOT NULL,
     drugId INT
         NOT NULL
         REFERENCES Drug,
@@ -180,6 +183,7 @@ CREATE TABLE DeliveryTask (
         NOT NULL
         REFERENCES Drugstore,
     packagesAmount INT
+        NOT NULL
         CHECK (packagesAmount >= 0),
     WarehouseId INT
         NOT NULL

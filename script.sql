@@ -25,13 +25,13 @@ CREATE TABLE Component(
         NOT NULL
 );
 
-DROP TABLE IF EXISTS Lab CASCADE;
-CREATE TABLE Lab(
+DROP TABLE IF EXISTS Laboratory CASCADE;
+CREATE TABLE Laboratory(
     id INT
         PRIMARY KEY,
-    labName TEXT
+    name TEXT
         NOT NULL,
-    boss TEXT
+    managerLastName TEXT
         NOT NULL
 );
 
@@ -41,9 +41,9 @@ CREATE TABLE Certificate(
         PRIMARY KEY,
     expires DATE
         NOT NULL,
-    labId INT
+    laboratoryId INT
         NOT NULL
-		REFERENCES Lab
+		REFERENCES Laboratory
 );
 
 DROP TABLE IF EXISTS Drug CASCADE;

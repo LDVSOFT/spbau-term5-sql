@@ -171,7 +171,7 @@ CREATE TABLE DeliveryTask (
     carId INT
         NOT NULL
         REFERENCES Car,
-    taskDate DATE,
+    taskDate DATE
         NOT NULL,
     drugId INT
         NOT NULL
@@ -181,7 +181,7 @@ CREATE TABLE DeliveryTask (
         REFERENCES Drugstore,
     itemsAmount INT
         NOT NULL
-        CHECK (packagesAmount >= 0),
+        CHECK (itemsAmount >= 0),
     warehouseId INT
         NOT NULL
         REFERENCES Warehouse

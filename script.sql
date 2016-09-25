@@ -110,7 +110,7 @@ CREATE TABLE DeliveryPart (
 DROP TABLE IF EXISTS Drugstore CASCADE;
 CREATE TABLE Drugstore(
     id INT
-		PRIMARY KEY,
+        PRIMARY KEY,
     adress TEXT
         NOT NULL,
     num INT
@@ -120,25 +120,25 @@ CREATE TABLE Drugstore(
 DROP TABLE IF EXISTS DrugsInDrugstore CASCADE;
 CREATE TABLE DrugsInDrugstore (
     drugstoreId INT
-		REFERENCES Drugstore,
+        REFERENCES Drugstore,
     cureId INT
-		REFERENCES Cure,
+        REFERENCES Cure,
     price INT
-		NOT NULL
+	    NOT NULL
         CHECK (price >= 0),
     packagesAmount INT
         CHECK (packagesAmount >= 0), 
-	PRIMARY KEY(drugstoreId, cureId)
+    PRIMARY KEY(drugstoreId, cureId)
 );
 
 DROP TABLE IF EXISTS Auto CASCADE;
 CREATE TABLE Auto (
     id INT
-		PRIMARY KEY,
+        PRIMARY KEY,
     num TEXT
         NOT NULL,
     inspectionDate DATE
-		NOT NULL
+        NOT NULL
 );
 
 

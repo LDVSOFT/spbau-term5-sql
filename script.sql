@@ -1,4 +1,50 @@
 -- all about cures
+DROP TABLE IF EXISTS Lab;
+CREATE TABLE Lab(
+    id INT
+        PRIMARY KEY,
+    labName TEXT
+        NOT NULL,
+    boss TEXT
+        NOT NULL
+);
+
+DROP TABLE IF EXISTS Certificate;
+CREATE TABLE Certificate(
+    id INT
+        PRIMARY KEY,
+    expires DATE
+        NOT NULL,
+    labId INT
+        NOT NULL
+		REFERENCES Lab
+);
+
+DROP TABLE IF EXISTS Component;
+CREATE TABLE Component(
+    id INT
+        PRIMARY KEY,
+    name TEXT
+        NOT NULL,
+    formula TEXT
+        NOT NULL
+);
+
+DROP TABLE IF EXISTS CureForm;
+CREATE TABLE CureForm(
+    id INT
+        PRIMARY KEY,
+    name TEXT
+        NOT NULL
+);
+
+DROP TABLE IF EXISTS Manufactorer;
+CREATE TABLE Manufactorer(
+    id INT
+        PRIMARY KEY,
+    name TEXT
+        NOT NULL
+);
 
 DROP TABLE IF EXISTS Cure;
 CREATE TABLE Cure(
@@ -22,54 +68,15 @@ CREATE TABLE Cure(
 		REFERENCES Certificate
 );
 
-DROP TABLE IF EXISTS CureForm;
-CREATE TABLE CureForm(
-    id INT
-        PRIMARY KEY,
-    name TEXT
-        NOT NULL
-);
-
-DROP TABLE IF EXISTS Manufactorer;
-CREATE TABLE Manufactorer(
-    id INT
-        PRIMARY KEY,
-    name TEXT
-        NOT NULL
-);
-
-DROP TABLE IF EXISTS Component;
-CREATE TABLE Component(
-    id INT
-        PRIMARY KEY,
-    name TEXT
-        NOT NULL,
-    formula TEXT
-        NOT NULL
-);
-
-DROP TABLE IF EXISTS Certificate;
-CREATE TABLE Certificate(
-    id INT
-        PRIMARY KEY,
-    expires DATE
-        NOT NULL,
-    labId INT
-        NOT NULL
-		REFERENCES Lab
-);
-
-DROP TABLE IF EXISTS Lab;
-CREATE TABLE Lab(
-    id INT
-        PRIMARY KEY,
-    labName TEXT
-        NOT NULL,
-    boss TEXT
-        NOT NULL
-);
-
 -- all about delivery
+DROP TABLE IF EXISTS Warehouse;
+CREATE TABLE Warehouse (
+	Id INT
+		PRIMARY KEY,
+	Adress TEXT
+		NOT NULL
+);
+
 
 DROP TABLE IF EXISTS Delivery;
 CREATE TABLE Delivery (
@@ -96,14 +103,6 @@ CREATE TABLE DeliveryPart (
 	ItemsPerPackage INT
 		NOT NULL,
 	PRIMARY KEY(DeliveryId, CureId)
-);
-
-DROP TABLE IF EXISTS Warehouse;
-CREATE TABLE Warehouse (
-	Id INT
-		PRIMARY KEY,
-	Adress TEXT
-		NOT NULL
 );
 
 -- sale

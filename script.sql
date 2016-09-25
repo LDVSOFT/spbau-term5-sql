@@ -74,6 +74,8 @@ CREATE TABLE Warehouse (
     id INT
         PRIMARY KEY,
     address TEXT
+        NOT NULL,
+    number INT
         NOT NULL
 );
 
@@ -130,8 +132,7 @@ CREATE TABLE Drugstore(
         PRIMARY KEY,
     address TEXT
         NOT NULL,
-    num INT
-        CHECK (num > 0)
+    number INT
 );
 
 DROP TABLE IF EXISTS DrugsInDrugstore CASCADE;

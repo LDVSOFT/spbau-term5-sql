@@ -1,14 +1,14 @@
--- all about cures
-DROP TABLE IF EXISTS CureForm CASCADE;
-CREATE TABLE CureForm(
+-- all about drugs
+DROP TABLE IF EXISTS DrugForm CASCADE;
+CREATE TABLE DrugForm(
     id INT
         PRIMARY KEY,
     name TEXT
         NOT NULL
 );
 
-DROP TABLE IF EXISTS Manufactorer CASCADE;
-CREATE TABLE Manufactorer(
+DROP TABLE IF EXISTS Manufacturer CASCADE;
+CREATE TABLE Manufacturer(
     id INT
         PRIMARY KEY,
     name TEXT
@@ -46,20 +46,20 @@ CREATE TABLE Certificate(
 		REFERENCES Lab
 );
 
-DROP TABLE IF EXISTS Cure CASCADE;
-CREATE TABLE Cure(
+DROP TABLE IF EXISTS Drug CASCADE;
+CREATE TABLE Drug(
     id INT
         PRIMARY KEY,
     name TEXT
         NOT NULL,
     internationalName TEXT
         NOT NULL,
-    cureFormId INT
+    drugFormId INT
         NOT NULL
-		REFERENCES CureForm,
-    manufactorerId INT
+		REFERENCES DrugForm,
+    manufacturerId INT
         NOT NULL
-		REFERENCES Manufactorer,
+		REFERENCES Manufacturer,
     componentId INT
         NOT NULL
 		REFERENCES Component,
@@ -73,7 +73,7 @@ DROP TABLE IF EXISTS Warehouse CASCADE;
 CREATE TABLE Warehouse (
 	Id INT
 		PRIMARY KEY,
-	Adress TEXT
+	Address TEXT
 		NOT NULL
 );
 
@@ -91,7 +91,7 @@ DROP TABLE IF EXISTS Distributor CASCADE;
 CREATE TABLE Distributor (
     Id INT
         PRIMARY KEY,
-    Addess
+    Address
         TEXT
         NOT NULL,
     BankAccountId INT
@@ -108,7 +108,7 @@ CREATE TABLE Delivery (
 	WarehouseId INT
 		NOT NULL
 		REFERENCES Warehouse,
-	DistributerId INT
+	DistributorId INT
 		NOT NULL
 		REFERENCES Distributor,
 	DeliveryDate TIMESTAMP,
@@ -118,14 +118,14 @@ CREATE TABLE Delivery (
 DROP TABLE IF EXISTS DeliveryPart CASCADE;
 CREATE TABLE DeliveryPart (
 	DeliveryId INT,
-	CureId INT,
+	DrugId INT,
 	DeliveryPackageCount INT
 		NOT NULL,
 	DeliveryPackageWeight REAL
 		NOT NULL,
 	ItemsPerPackage INT
 		NOT NULL,
-	PRIMARY KEY(DeliveryId, CureId)
+	PRIMARY KEY(DeliveryId, DrugId)
 );
 
 -- sale
@@ -144,14 +144,14 @@ DROP TABLE IF EXISTS DrugsInDrugstore CASCADE;
 CREATE TABLE DrugsInDrugstore (
     drugstoreId INT
         REFERENCES Drugstore,
-    cureId INT
-        REFERENCES Cure,
+    drugId INT
+        REFERENCES Drug,
     price INT
 	    NOT NULL
         CHECK (price >= 0),
     packagesAmount INT
         CHECK (packagesAmount >= 0), 
-    PRIMARY KEY(drugstoreId, cureId)
+    PRIMARY KEY(drugstoreId, drugId)
 );
 
 DROP TABLE IF EXISTS Auto CASCADE;
@@ -173,10 +173,10 @@ CREATE TABLE AutoTask (
         NOT NULL
         REFERENCES Auto,
     taskDate DATE,
-    cureId INT
+    drugId INT
         NOT NULL
-        REFERENCES Cure,
-    dragstoreId INT
+        REFERENCES Drug,
+    drugstoreId INT
         NOT NULL
         REFERENCES Drugstore,
     packagesAmount INT

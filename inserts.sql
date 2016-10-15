@@ -93,7 +93,8 @@ INSERT INTO Drug(id, name, internationalName, dosageFormId, manufacturerId, comp
     (46, 'Lot 6', 'Lot 6', 2, 8, 9, 46, '27/10/2003', 6),
     (47, 'Lithium dibromide', 'Lithium dibromide', 4, 1, 6, 47, '04/10/2018', 0),
     (48, 'Antibiotic Gel (AKA Heal Jelly)', 'Antibiotic Gel (AKA Heal Jelly)', 4, 7, 3, 48, '02/01/2011', 6),
-    (49, 'Space Mead', 'Space Mead', 0, 3, 5, 49, '22/07/2007', 6);
+    (49, 'Space Mead', 'Space Mead', 0, 3, 5, 49, '22/07/2007', 6),
+    (50, 'Фуфлофен', 'Space Mead', 0, 3, 6, 50, '22/07/2007', 6);
 
 INSERT INTO Warehouse(id, address, number) VALUES
     (0, 'Grimmauld Place 14', 0),

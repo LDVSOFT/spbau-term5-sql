@@ -1,3 +1,5 @@
+SET dateslyle = dmy;
+
 -- all about drugs
 DROP TABLE IF EXISTS DosageForm CASCADE;
 CREATE TABLE DosageForm(

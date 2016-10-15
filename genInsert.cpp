@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int drugCnt = 40, streetCnt = 37, DosageFormCnt = 5;
+int drugCnt = 50, streetCnt = 37, DosageFormCnt = 5, manufacturerCnt = 10, componentCnt = 15, labsCnt = 7, namesCnt = 27;
 
 string drugsName[161] = {
 "Adara's Rose",
@@ -199,7 +199,7 @@ string streetName[38] = {
 "Scotland Place",
 "Shaftesbury Avenue",
 "South Way",
-"Spinner's End",
+"Spinners End",
 "Tollington Way",
 "Tottenham Court Road",
 "Vauxhall Road",
@@ -215,9 +215,9 @@ string componentName[48] = {
 "aqua pura",
 "Aconite (Wolfsbane)",
 "Acromantula venom",
-"Adder's Fork",
+"Adders Fork",
 "Agrippa",
-"Angel's Trumpet",
+"Angels Trumpet",
 "Antimony",
 "Armadillo bile",
 "Ashwinder egg",
@@ -276,6 +276,141 @@ string DosageFormName[11] = {
 "pastes"
 };
 
+
+string manufacturerNames[79] = {
+"Octapharma",
+"Okasa Pharma",
+"Okopharm Nahrstoff",
+"OM Pharma",
+"OMRON",
+"Once",
+"Ontex",
+"Oral-b",
+"Oranienburger Pharmawerk",
+"Organon",
+"Orient Foods",
+"Orling",
+"Orpha Devel Handels-und Vertriebs GmbH",
+"Ostpharm",
+"Oxford Lab",
+"Panacea Biotec",
+"Panpharma",
+"Paras Pharm",
+"Parke-Davis",
+"Parke-Davis/Goedeck",
+"Pashupati",
+"Pasteur Merieux",
+"Pateon Inc",
+"Paul Hauser Chepharin",
+"Pennex Labs",
+"Perry Malaysia",
+"Pettens France Chimie",
+"Pharm. Factory #6",
+"Pharma Biagini",
+"Pharma Nord",
+"Pharma Plast",
+"Pharma Riace Ltd",
+"Pharma-Med",
+"Pharmachim",
+"Pharmachim (Novochim)",
+"Pharmachim (Pharmacia AD)",
+"Pharmachim (Sopharma)",
+"Pharmachim (Troyapharm)",
+"Pharmachim, NIHFI",
+"Pharmacia",
+"Pharmacia AD",
+"Pharmacia and Upjohn",
+"Pharmacia NV/SA",
+"Pharmalife Research",
+"Pharmascience",
+"Pharmatech",
+"Pharmaton",
+"Pharmedge Life Science",
+"Pharmimpex",
+"Philips Avent",
+"Philopharm",
+"Phytopharm Klenka",
+"Pierre Fabre",
+"Plastchim",
+"Plastod",
+"Pleasure Latex Prod.",
+"Plethico",
+"Pliva-Lachema",
+"Polfa",
+"Poli",
+"Polpharma",
+"Primax",
+"Pro Vista AG",
+"Pro.Med.CS",	
+"Probio Nutra Forte AS",
+"Procter & Gamble",
+"Productos Naturales de Canarias S.L.",
+"Proimpex",	
+"ProLab Diagnostics",	
+"Promed Exports",	
+"Promedica",	
+"Propharma A/S",
+"Protech Biosystems",
+"PSI",
+"PT Vonix Latexindo",
+"PUR",
+"Qixing",
+"Queisser Pharma",
+"Quimica Montpellier"
+};
+
+string labsName[19] = {
+"Black Mesa Research Facility",
+"Black Mesa East",
+"Black Letter Labs",
+"Aperture Science Laboratories",
+"Gizmonic Institute",
+"The Hanso Foundation",
+"Characters of Sluggy Freelance#Hereti-Corp",
+"Imagination Institute",
+"Mittelos Bioscience",
+"PACT Corporation",
+"Northguard",
+"Project Cadmus",
+"Robinson HeathNuclear Utilisation Technology Centre",
+"S.T.A.R. Labs",
+"Umbrella Corporation",
+"The Jeffersonian Institute",
+"Biocyte Pharmaceuticals",
+"NorBAC",
+"The D.H.A.R.M.A. Initiative"
+};
+
+string names[27] = {
+"SMITH",
+"JOHNSON",
+"WILLIAMS",
+"JONES",
+"BROWN",
+"DAVIS",
+"MILLER",
+"WILSON",
+"MOORE",
+"TAYLOR",
+"ANDERSON",
+"THOMAS",
+"JACKSON",
+"WHITE",
+"HARRIS",
+"MARTIN",
+"THOMPSON",
+"GARCIA",
+"MARTINEZ",
+"ROBINSON",
+"CLARK",	
+"RODRIGUEZ",
+"LEWIS",
+"LEE",
+"WALKER",
+"HALL",
+"ALLEN"
+};
+
 void genDosageForm() {
     random_shuffle(DosageFormName, DosageFormName + 11);
     printf("INSERT INTO DosageForm(id, name) VALUES\n");
@@ -289,9 +424,105 @@ void genDosageForm() {
     }
 }
 
+void genManufacturer() {
+    random_shuffle(manufacturerNames, manufacturerNames + 79);
+    printf("INSERT INTO Manufacturer(id, name) VALUES\n");
+    for (int i = 0; i < manufacturerCnt; ++i) {
+        printf("    (%d, '%s')", i, manufacturerNames[i].c_str());
+        if (i + 1 < manufacturerCnt) {
+            printf(",\n");
+        } else {
+            printf(";\n\n");
+        }
+    }
+}
+
+string genFormulaText() {
+    string fl = "CHO";
+    int len = rand() % 6 + 1;
+    int let = 1;
+    string res;
+    for (int i = 0; i < len; ++i) {
+        if (let == 1) {
+            res += fl[rand()%3]; 
+        } else {
+            res += ('0' + (rand()%9 + 1));
+        }
+        let = rand()%2;
+    }
+    return res;
+}
+
+string genDateText() {
+    string res;
+    int day = rand() % 29 + 1;
+    res += '0' + day/10;
+    res += '0' + day%10;
+    res += '/';
+    int mn = rand() % 11 + 1;
+    res += '0' + mn/10;
+    res += '0' + mn%10;
+    res += "/20";
+    int yr = rand()%20;
+    res += '0' + yr/10;
+    res += '0' + yr%10;
+    return res;
+}
+
+void genComponent() {    
+    random_shuffle(componentName, componentName + 48);
+    printf("INSERT INTO Component(id, name, formula) VALUES\n");
+    for (int i = 0; i < componentCnt; ++i) {
+        printf("    (%d, '%s', '%s')", i, componentName[i].c_str(), 
+            genFormulaText().c_str());
+        if (i + 1 < componentCnt) {
+            printf(",\n");
+        } else {
+            printf(";\n\n");
+        }
+    }
+}
+
+void genLabs() {
+    random_shuffle(labsName, labsName + 19);
+    printf("INSERT INTO Laboratory(id, name, managerLastName) VALUES\n");
+    for (int i = 0; i < labsCnt; ++i) {
+        printf("    (%d, '%s', '%s')", i, labsName[i].c_str(), 
+            names[rand()%namesCnt].c_str());
+        if (i + 1 < labsCnt) {
+            printf(",\n");
+        } else {
+            printf(";\n\n");
+        }
+    }
+}
+
+void genDrugs() {
+    random_shuffle(drugsName, drugsName + 161);
+    printf("INSERT INTO Drug(id, name, internationalName, dosageFormId, manufacturerId, componentId, certificateId, certificateExpires, certificateLaboratoryId) VALUES\n");
+    for (int i = 0; i < drugCnt; ++i) {
+        printf("    (%d, '%s', '%s', %d, %d, %d, %d, '%s', %d)", i,   drugsName[i].c_str(), drugsName[i].c_str(), 
+             rand() % DosageFormCnt, 
+             rand() % manufacturerCnt,
+             rand() % componentCnt, 
+             i, 
+	     genDateText().c_str(), 
+             rand() % labsCnt
+ );
+        if (i + 1 < drugCnt) {
+            printf(",\n");
+        } else {
+            printf(";\n\n");
+        }
+    }
+}
 
 int main() {
     freopen("inserts.sql", "w", stdout);
     srand(179);
     genDosageForm();
+    genManufacturer();
+    genComponent();
+    genLabs();
+    genDrugs();
 }

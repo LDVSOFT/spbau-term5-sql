@@ -43,3 +43,17 @@ INSERT INTO Drug(id, name, internationalName, dosageFormId, manufacturerId, comp
     (5, 'phosphalugel', 'phosphalugel', 3, 3, 4, 7, '04/11/1994', 3),
     (6, 'nurofen', 'nurofen', 1, 3, 6, 10, '18/03/1995', 4),
     (7, 'maalox', 'maalox', 4, 7, 7, 11, '01/09/2002', 4);
+
+
+INSERT INTO Drugstore(id, address, number)
+    VALUES (0, 'Hlopina 8', 0),
+    (1, 'Toreza 3', 1), 
+    (2, 'Krasnostudencheskey 1', 2), 
+    (3, 'Lenenskey 131', 3);
+
+INSERT INTO DrugsInDrugstore(drugstoreId, drugId, price, itemsCount)
+    VALUES (0, 3, 1017900.00, 2), 
+    (1, 3, 5664765.89, 5), 
+    (3, 1, 1234567.89, 4), 
+    (1, 7, 1223456.99, 3), 
+    (0, 7, 1234567.99, 6);

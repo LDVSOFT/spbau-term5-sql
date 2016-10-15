@@ -2,7 +2,8 @@
 
 using namespace std;
 
-int drugCnt = 50, streetCnt = 37, DosageFormCnt = 5, manufacturerCnt = 10, componentCnt = 15, labsCnt = 7, namesCnt = 27;
+int drugCnt = 50, streetCnt = 37, DosageFormCnt = 5, manufacturerCnt = 10, componentCnt = 15, labsCnt = 7, namesCnt = 27, warehouseCnt = 20,
+distributorCnt = 9, warehouseDeliveryCnt = 28, warehouseDeliveryPartCnt = 39;
 
 string drugsName[161] = {
 "Adara's Rose",
@@ -517,6 +518,114 @@ void genDrugs() {
     }
 }
 
+string genAdressText() {
+    string res = streetName[rand()%streetCnt];
+    res += ' ';
+    int num = rand()%99 + 1;
+    res += ('0' + num/10);
+    res += ('0' + num%10);
+    return res;
+}
+
+void genWarehouse() {
+    printf("INSERT INTO Warehouse(id, address, number) VALUES\n");
+    for (int i = 0; i < warehouseCnt; ++i) {
+        printf("    (%d, '%s', %d)", 
+        i,   genAdressText().c_str(),
+        i);
+        if (i + 1 < warehouseCnt) {
+            printf(",\n");
+        } else {
+            printf(";\n\n");
+        }
+    }
+}
+
+string genBankAccountNumber() {
+    string res = "SE45";
+    for (int i = 0; i < 5; ++i) {
+        res += ' ';
+        for (int j = 0; j < 4; ++j) {
+            res += '0' + rand()%10;
+        }
+    }
+    return res;
+}
+
+string genPhone() {
+    string res = "+7 ";
+    for (int i = 0; i < 3; ++i) {
+        res += '0' + rand()%10;
+    }
+    res += ' ';
+
+    for (int i = 0; i < 3; ++i) {
+        res += '0' + rand()%10;
+    }
+    res += ' ';
+
+    for (int i = 0; i < 2; ++i) {
+        res += '0' + rand()%10;
+    }
+    res += ' ';
+
+    for (int i = 0; i < 2; ++i) {
+        res += '0' + rand()%10;
+    }
+    return res;
+}
+
+void genDistributor() {
+    printf("INSERT INTO Distributor(id, address, bankAccountNumber, contactName, contactPhoneNumber) VALUES\n");
+    for (int i = 0; i < distributorCnt; ++i) {
+        printf("    (%d, '%s', '%s', '%s', '%s')", 
+        i,   genAdressText().c_str(),
+         genBankAccountNumber().c_str(), 
+        names[rand()%namesCnt].c_str(),
+        genPhone().c_str());
+        if (i + 1 < distributorCnt) {
+            printf(",\n");
+        } else {
+            printf(";\n\n");
+        }
+    }
+}
+
+
+void genWarehouseDelivery() {
+    printf("INSERT INTO WarehouseDelivery(id, warehouseId, distributorId, deliveredAt, warehouseKeeper) VALUES\n");
+    for (int i = 0; i < warehouseDeliveryCnt; ++i) {
+        printf("    (%d, %d, %d, '%s', '%s')", 
+        i,   rand()%warehouseCnt,
+        rand()%distributorCnt, 
+        genDateText().c_str(),
+        names[rand()%namesCnt].c_str());
+        if (i + 1 < warehouseDeliveryCnt) {
+            printf(",\n");
+        } else {
+            printf(";\n\n");
+        }
+    }
+}
+
+void genWarehouseDeliveryPart() {
+    printf("INSERT INTO WarehouseDeliveryPart(deliveryId, drugId, packageCount, packageWeight, itemsPerPackage, itemPurchasePrice) VALUES\n");
+    for (int i = 0; i < warehouseDeliveryPartCnt; ++i) {
+        printf("    (%d, %d, %d, %f, %d, %d)", 
+        rand()%warehouseDeliveryCnt, 
+        rand()%drugCnt, 
+        rand()%100, 
+        (rand()%20)*100*1., 
+        rand()%100, 
+        rand()%1000000000);
+        if (i + 1 < warehouseDeliveryPartCnt) {
+            printf(",\n");
+        } else {
+            printf(";\n\n");
+        }
+    }
+}
+
 int main() {
     freopen("inserts.sql", "w", stdout);
     srand(179);
@@ -525,4 +634,8 @@ int main() {
     genComponent();
     genLabs();
     genDrugs();
+    genWarehouse();
+    genDistributor();
+    genWarehouseDelivery();
+    genWarehouseDeliveryPart();
 }

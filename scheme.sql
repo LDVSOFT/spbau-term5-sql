@@ -97,7 +97,7 @@ CREATE TABLE WarehouseDelivery (
     warehouseId INT
         NOT NULL
         REFERENCES Warehouse,
-    distributerId INT
+    distributorId INT
         NOT NULL
         REFERENCES Distributor,
     deliveredAt TIMESTAMP

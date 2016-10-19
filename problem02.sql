@@ -1,6 +1,6 @@
 -- для каждой планеты вывести суммарное число полётов, 
 -- число полётов совершённых 3 самыми высокими уровнями капитанов
--- и долю полётов высокоуровневых капитанов в процентах (точность до целых).
+-- и долю полётов высокоуровневых капитанов в процентах (округление вниз).
 -- вывести отсортированными по суммарному числу полётов, 
 -- затем по процентному отношению
 
@@ -10,9 +10,9 @@ WITH Total AS (
         GROUP BY P.name
 ),
 HighLevel AS (
-    SELECT P.name, COUNT(C.id) count
-        FROM Flight F JOIN Planet P ON F.planet_id = P.id
-            JOIN Commander C ON F.commander_id = C.id
+    SELECT P.name, COUNT(C.id IS NOT NULL) count
+        FROM Planet P LEFT JOIN Flight F ON F.planet_id = P.id
+            LEFT JOIN Commander C ON F.commander_id = C.id
         WHERE (C.rating = 'Elite' OR C.rating = 'Deadly' OR C.rating = 'Dangerous')
         GROUP BY P.name
 )

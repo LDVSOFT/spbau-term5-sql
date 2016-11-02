@@ -164,6 +164,13 @@ JOIN MaxWarehouseCount MWC
   ON PWC.pharmacy_id = MWC.pharmacy_id AND PWC.warehouse_id != MWC.warehouse_id;
 
 --Query #10:
+-- [REVIEW] При попытке выполнить CREATE VIEW на тестовых данных (fill.sql из
+-- [REVIEW] архива) происходит переполнение и ошибка СУБД. Форсировать тип?
+-- [REVIEW] ROW_NUMBER() вычисляет номер строки вообще во всём VIEW, а не для
+-- [REVIEW] конкретного склада - не хватает PARTITION BY. Из-за этого для почти
+-- [REVIEW] всех складов медиана вычисляется некорректна. Также условие фильтра
+-- [REVIEW] находится в JOIN ON ... вместо WHERE, хотя оно не имеет никакого
+-- [REVIEW] отношения к самому соединению (аналогичная проблема была выше).
 DROP VIEW IF EXISTS WarehouseDeliveries;
 CREATE OR REPLACE VIEW WarehouseDeliveries AS
   SELECT Delivery.destination_id, DeliverySum.price_sum, ROW_NUMBER() OVER (ORDER BY Delivery.destination_id, DeliverySum.price_sum) AS row_num 

@@ -70,21 +70,21 @@ CREATE TABLE Drug (
 DROP TABLE IF EXISTS Delivery CASCADE;
 CREATE TABLE Delivery (
   id                    SERIAL PRIMARY KEY,
-  drug_id               INTEGER NOT NULL REFERENCES Drug,
   distributor_id        INTEGER NOT NULL REFERENCES Distributor,
-  travel_package_count  INTEGER NOT NULL CHECK (travel_package_count > 0),
-  travel_package_weight INTEGER NOT NULL CHECK (travel_package_weight > 0),
-  sale_package_count    INTEGER NOT NULL CHECK (sale_package_count > 0),
-  sale_package_price    INTEGER NOT NULL CHECK (sale_package_price >= 0)
+  destination_id     INTEGER                  NOT NULL REFERENCES Warehouse,
+  delivery_date      TIMESTAMP WITH TIME ZONE NOT NULL,
+  receiver_last_name TEXT                     NOT NULL
 );
 
 DROP TABLE IF EXISTS DeliveryPart CASCADE;
 CREATE TABLE DeliveryPart (
   id                 SERIAL PRIMARY KEY,
   delivery_id        INTEGER                  NOT NULL REFERENCES Delivery,
-  destination_id     INTEGER                  NOT NULL REFERENCES Warehouse,
-  delivery_date      TIMESTAMP WITH TIME ZONE NOT NULL,
-  receiver_last_name TEXT                     NOT NULL
+  drug_id               INTEGER NOT NULL REFERENCES Drug,
+  travel_package_count  INTEGER NOT NULL CHECK (travel_package_count > 0),
+  travel_package_weight INTEGER NOT NULL CHECK (travel_package_weight > 0),
+  sale_package_count    INTEGER NOT NULL CHECK (sale_package_count > 0),
+  sale_package_price    INTEGER NOT NULL CHECK (sale_package_price >= 0)
 );
 
 DROP TABLE IF EXISTS DrugSaleInfo CASCADE;

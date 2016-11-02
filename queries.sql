@@ -81,7 +81,8 @@ JOIN DrugSaleInfo
 GROUP BY Pharmacy.id;
 
 --Query #6:
--- [REVIEW] Замечаний нет, кроме общего для всех запросов.
+-- [REVIEW] Если какое-то лекарство отсутствует в таблице DrugSaleInfo,
+-- [REVIEW] оно не будет выведено. Можно использовать LEFT JOIN и COALESCE.
 SELECT Drug.trade_name, DrugsAmount.amount 
 FROM Drug 
 JOIN (

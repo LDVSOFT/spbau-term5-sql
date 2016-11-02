@@ -184,3 +184,4 @@ JOIN (
 ) AS DeliveriesCount 
   ON WD.destination_id = DeliveriesCount.destination_id AND WD.row_num * 2 >= DeliveriesCount.count AND WD.row_num * 2 <= DeliveriesCount.count + 2
 GROUP BY WD.destination_id;
+-- [REVIEW] Отсутствовал символ перевода строки в конце файла

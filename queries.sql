@@ -93,7 +93,6 @@ JOIN (
   ON Drug.id = DrugsAmount.drug_id;
 
 --Query #7:
-
 DROP VIEW IF EXISTS MinMaxPrice;
 CREATE OR REPLACE VIEW MinMaxPrice AS 
 SELECT DrugSaleInfo.drug_id, MIN(DrugSaleInfo.price) AS min_price, MAX(DrugSaleInfo.price) AS max_price
@@ -111,6 +110,8 @@ JOIN DrugSaleInfo
   ON MinMaxPrice.drug_id = DrugSaleInfo.drug_id AND MinMaxPrice.max_price = DrugSaleInfo.price AND DrugSaleInfo.amount != 0;
 
 --Query #8:
+-- [REVIEW] Если у какого-то дистрибьютора мы не закупались, то он будет
+-- [REVIEW] отсутствовать в результатах из-за использования JOIN.
 SELECT Distributor.first_name, Distributor.last_name, DistributorSum.price_sum
 FROM Distributor
 JOIN (

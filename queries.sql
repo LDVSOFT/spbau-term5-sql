@@ -129,6 +129,15 @@ JOIN (
   ON Distributor.id = DistributorSum.distributor_id;
 
 --Query #9:
+-- [REVIEW] Запросы не работают, так как PWC.warehouse_id используется без
+-- [REVIEW] агрегирующей функции и в MWC получается много складов для
+-- [REVIEW] каждой аптеки. Аналогичная проблема в запросе второго склада.
+-- [REVIEW]
+-- [REVIEW] Вместо VIEW лучше использовать WITH. Сочетание двух запросов для
+-- [REVIEW] поиска двух максимумов плохо читается, выглядит как повторение кода
+-- [REVIEW] между MaxWarehouseCount и поиском второго максимума, а также проще
+-- [REVIEW] и естественнее делается через LIMIT. Тут ещё нигде не видно
+-- [REVIEW] константу "2" из задания. 
 DROP VIEW IF EXISTS PharmacyWarehouseCount CASCADE;
 CREATE OR REPLACE VIEW PharmacyWarehouseCount AS
   SELECT CarAssignmentCargo.target_pharmacy_id AS pharmacy_id, CarAssignment.warehouse_id, COUNT(DISTINCT(CarAssignmentCargo.car_assignment_id)) AS delivery_count

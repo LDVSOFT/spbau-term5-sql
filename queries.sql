@@ -1,6 +1,15 @@
 -- Task: https://www.dropbox.com/sh/0k59gl5rvmg7w54/AAAuRJ2ia_v8V5T0CopBQxJma?dl=0&preview=%D0%A1%D0%A3%D0%91%D0%94+2016.+%D0%90%D0%A3+-+%D0%92%D0%B0%D1%80%D0%B8%D0%B0%D0%BD%D1%82+2.pdf
 
+-- [REVIEW] Общее замечание ко всем запросам: сложно читать из-за активного
+-- [REVIEW] использования JOIN с внутренним запросом. Запрос получается
+-- [REVIEW] вывернутым наизнанку; читать приходится изнтри. Часто такую
+-- [REVIEW] конструкции можно заменить на просто несколько JOIN с разными
+-- [REVIEW] таблицами и WHERE.
+
 --Query #1:
+-- [REVIEW] Схема предполагает, что international_name уникален, что делает
+-- [REVIEW] задание тривиальным. Поэтому предполагаем, что UNIQUE в схеме нет.
+-- [REVIEW] Без замечаний, кроме общего.
 SELECT SameDrugs.international_name, Ing.name
 FROM Ingredient Ing 
 JOIN (
@@ -13,6 +22,8 @@ JOIN (
   ON SameDrugs.ingredient_id = Ing.id;
 
 --Query #2:
+-- [REVIEW] Одна лаборатория может быть выведена несколько раз, если она
+-- [REVIEW] выдала несколько сертификатов на aqua pura.
 SELECT L.name
 FROM Laboratory L
 JOIN (
@@ -30,6 +41,7 @@ JOIN (
   ON L.id = LaborotoriesId.laboratory_id;
 
 --Query #3:
+-- [REVIEW] Внутренний JOIN с таблицей Drug не нужен.
 SELECT Drug.trade_name 
 FROM Drug 
 WHERE Drug.id NOT IN (
@@ -41,6 +53,9 @@ WHERE Drug.id NOT IN (
 );
 
 --Query #4:
+-- [REVIEW] JOIN во внутреннем запросе с Pharmacies лишний. Можно просто
+-- [REVIEW] использовать HAVING на подзапросе Drugs и не использовать
+-- [REVIEW] JOIN для фильтрации результатов, а не объединения - это путает.
 SELECT Drug.trade_name 
 FROM Drug 
 JOIN (
@@ -57,6 +72,8 @@ JOIN (
   ON Drug.id = DrugsId.drug_id;
 
 --Query #5:
+-- [REVIEW] Не будет выведена информация по аптекам, в которых лекарств
+-- [REVIEW] вообще нет. Кажется, было бы разумным тогда выводить NULL.
 SELECT Pharmacy.id, MIN(DrugSaleInfo.price), MAX(DrugSaleInfo.price), AVG(DrugSaleInfo.price)
 FROM Pharmacy
 JOIN DrugSaleInfo
@@ -64,6 +81,7 @@ JOIN DrugSaleInfo
 GROUP BY Pharmacy.id;
 
 --Query #6:
+-- [REVIEW] Замечаний нет, кроме общего для всех запросов.
 SELECT Drug.trade_name, DrugsAmount.amount 
 FROM Drug 
 JOIN (

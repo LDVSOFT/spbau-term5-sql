@@ -93,6 +93,11 @@ JOIN (
   ON Drug.id = DrugsAmount.drug_id;
 
 --Query #7:
+-- [REVIEW] Есть довольно много общего кода между двумя запросами по разные
+-- [REVIEW] стороны от UNION ALL. Фильтрация сделана внутри условия JOIN ON,
+-- [REVIEW] она не имеет никакого отношения к самому JOIN - только ко всему
+-- [REVIEW] запросу в целом. Кажется, что JOIN можно вынести во VIEW и это
+-- [REVIEW] уменьшит код. А вместо VIEW лучше использовать WITH.
 DROP VIEW IF EXISTS MinMaxPrice;
 CREATE OR REPLACE VIEW MinMaxPrice AS 
 SELECT DrugSaleInfo.drug_id, MIN(DrugSaleInfo.price) AS min_price, MAX(DrugSaleInfo.price) AS max_price

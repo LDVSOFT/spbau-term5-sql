@@ -139,9 +139,9 @@ JOIN (
 -- [REVIEW] Вместо VIEW лучше использовать WITH. Сочетание двух запросов для
 -- [REVIEW] поиска двух максимумов плохо читается, выглядит как повторение кода
 -- [REVIEW] между MaxWarehouseCount и поиском второго максимума, а также проще
--- [REVIEW] и естественнее делается через LIMIT; тем более, что это решение почти не
--- [REVIEW] масштабируется на бОльшее число записей в результате. Тут ещё нигде не видно
--- [REVIEW] константу "2" из задания. 
+-- [REVIEW] и естественнее делается через LIMIT; тем более, что это решение
+-- [REVIEW] почти не масштабируется на бОльшее число записей в результате. Тут
+-- [REVIEW] ещё нигде не видно константу "2" из задания.
 DROP VIEW IF EXISTS PharmacyWarehouseCount CASCADE;
 CREATE OR REPLACE VIEW PharmacyWarehouseCount AS
   SELECT CarAssignmentCargo.target_pharmacy_id AS pharmacy_id, CarAssignment.warehouse_id, COUNT(DISTINCT(CarAssignmentCargo.car_assignment_id)) AS delivery_count

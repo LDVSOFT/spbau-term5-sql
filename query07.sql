@@ -1,8 +1,8 @@
-CREATE OR REPLACE VIEW MinMaxPrice AS
+WITH MinMaxPrice AS (
     SELECT name, MAX(price) AS mxPrice, MIN(price) AS mnPrice
     FROM Drug JOIN DrugsInDrugstore AS DnD ON Drug.id = DnD.drugId
-    GROUP BY name;
-
+    GROUP BY name
+)
 SELECT Drug.name, 
        Drugstore.number AS drugStoreNumber,
        DnD.price, 

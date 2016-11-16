@@ -68,6 +68,7 @@ for i in range(distributorN):
     )
 
 warehouseDelivery = 100000
+warehouseDeliveryPartN = 100000
 for i in range(warehouseDelivery):
     f.write("INSERT INTO WarehouseDelivery VALUES(%d, %d, %d, '%s', '%s');\n" %
             (
@@ -78,12 +79,9 @@ for i in range(warehouseDelivery):
                 , rndstr()
             )
     )
-
-warehouseDeliveryPartN = 100000
-for i in range(warehouseDeliveryPartN):
     f.write("INSERT INTO WarehouseDeliveryPart VALUES(%d, %d, %d, %d, %d, %d);\n" %
             (
-                random.randint(0, warehouseDelivery-1)
+                i
                 , random.randint(0, drugN-1)
                 , random.randint(0, 1000)
                 , random.randint(0, 1000)
@@ -124,6 +122,7 @@ for i in range(carN):
     )
 
 drugstoreDeliveryN = 100000
+drugstoreDeliveryPartN = 100000
 for i in range(drugstoreDeliveryN):
     f.write("INSERT INTO DrugstoreDelivery VALUES(%d, %d, '%s', %d);\n" %
             (
@@ -133,12 +132,9 @@ for i in range(drugstoreDeliveryN):
                 , random.randint(0, warehouseN-1)
             )
     )
-
-drugstoreDeliveryPartN = 100000
-for i in range(drugstoreDeliveryPartN):
     f.write("INSERT INTO DrugstoreDeliveryPart VALUES(%d, %d, %d, %d);\n" %
             (
-                random.randint(0, drugstoreDeliveryN-1)
+                i
                 , random.randint(0, drugN-1)
                 , random.randint(0, drugstoreN-1)
                 , random.randint(0, 1000)

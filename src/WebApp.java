@@ -27,7 +27,7 @@ public class WebApp {
     private static JdbcConnectionSource createConnectionSource() {
         try {
             JdbcConnectionSource connectionSource = new JdbcConnectionSource(
-                    "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=foobar"
+                    "jdbc:postgresql://localhost:12345/postgres?user=postgres&password=foobar"
             );
             connectionSource.getReadWriteConnection(null).setAutoCommit(false);
             return connectionSource;
@@ -57,7 +57,7 @@ public class WebApp {
 
     private static Object getAllDrugs(Request req, Response resp) throws IOException, SQLException {
         final JdbcConnectionSource connectionSource = createConnectionSource();
-        resp.type("text/plain");
+        resp.type("text/plain; charset=utf-8");
         return runTxn("REPEATABLE READ", connectionSource, () -> {
             Dao<Drug, ?> drugDao = DaoManager.createDao(connectionSource, Drug.class);
             QueryBuilder<Drug, ?> drugQueryBuilder = drugDao.queryBuilder();

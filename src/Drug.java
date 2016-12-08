@@ -57,8 +57,8 @@ class Drug {
                 ", name='" + name + '\'' +
                 ", internationalName='" + internationalName + '\'' +
                 ", dosageForm='" + dosageForm.getName() + '\'' +
-                ", manufacturer=" + ((manufacturer == null) ? "null" : '\'' + manufacturer.getName() + '\'') + '\'' +
-                ", component=" + ((component == null) ? "null" : '\'' + component.getName() + '\'') + '\'' +
+                ", manufacturer=" + ((manufacturer == null) ? "null" : '\'' + manufacturer.getName() + '\'') +
+                ", component=" + ((component == null) ? "null" : '\'' + component.getName() + '\'') +
                 '}';
     }
 }

@@ -3,4 +3,4 @@ gradle/
 gradlew*
 .gradle/
 .idea/
-./*.iml
+*.iml

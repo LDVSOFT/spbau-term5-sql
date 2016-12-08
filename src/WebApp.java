@@ -26,8 +26,12 @@ import static spark.Spark.port;
 public class WebApp {
     private static JdbcConnectionSource createConnectionSource() {
         try {
+            String host = System.getenv("POSTGRES");
+            if (host == null || host.isEmpty()) {
+                host = "localhost:5432";
+            }
             JdbcConnectionSource connectionSource = new JdbcConnectionSource(
-                    "jdbc:postgresql://localhost:12345/postgres?user=postgres&password=foobar"
+                    "jdbc:postgresql://" + host + "/postgres?user=postgres&password=foobar"
             );
             connectionSource.getReadWriteConnection(null).setAutoCommit(false);
             return connectionSource;
